@@ -1,0 +1,164 @@
+try_alllines                   >user  www www;\nworker_processe...<
+ try_lines                      >user  www www;\nworker_processe...<
+  try_assignment                 >user  www www;\nworker_processe...<
+   try_key                        >user  www www;\nworker_processe...<
+   got_key                       
+   try__                          >  www www;\nworker_processes  2...<
+   got__                         
+   try_value                      >www www;\nworker_processes  2;\n...<
+   got_value                     
+   try__                          >;\nworker_processes  2;\npid /va...<
+   got__                         
+   try_terminator                 >;\nworker_processes  2;\npid /va...<
+   got_terminator                
+  got_assignment                
+ got_lines                     
+ try_lines                      >worker_processes  2;\npid /var/...<
+  try_assignment                 >worker_processes  2;\npid /var/...<
+   try_key                        >worker_processes  2;\npid /var/...<
+   got_key                       
+   try__                          >  2;\npid /var/run/nginx.pid;\n ...<
+   got__                         
+   try_value                      >2;\npid /var/run/nginx.pid;\n \n#...<
+   got_value                     
+   try__                          >;\npid /var/run/nginx.pid;\n \n# ...<
+   got__                         
+   try_terminator                 >;\npid /var/run/nginx.pid;\n \n# ...<
+   got_terminator                
+  got_assignment                
+ got_lines                     
+ try_lines                      >pid /var/run/nginx.pid;\n \n# [ ...<
+  try_assignment                 >pid /var/run/nginx.pid;\n \n# [ ...<
+   try_key                        >pid /var/run/nginx.pid;\n \n# [ ...<
+   got_key                       
+   try__                          > /var/run/nginx.pid;\n \n# [ deb...<
+   got__                         
+   try_value                      >/var/run/nginx.pid;\n \n# [ debu...<
+   got_value                     
+   try__                          >;\n \n# [ debug | info | notice ...<
+   got__                         
+   try_terminator                 >;\n \n# [ debug | info | notice ...<
+   got_terminator                
+  got_assignment                
+ got_lines                     
+ try_lines                      ># [ debug | info | notice | wa...<
+  try_assignment                 ># [ debug | info | notice | wa...<
+   try_key                        ># [ debug | info | notice | wa...<
+   not_key                       
+  not_assignment                
+  try_block                      ># [ debug | info | notice | wa...<
+   try_key                        ># [ debug | info | notice | wa...<
+   not_key                       
+  not_block                     
+  try_script                     ># [ debug | info | notice | wa...<
+   try_assignment                 ># [ debug | info | notice | wa...<
+    try_key                        ># [ debug | info | notice | wa...<
+    not_key                       
+   not_assignment                
+   try_block                      ># [ debug | info | notice | wa...<
+    try_key                        ># [ debug | info | notice | wa...<
+    not_key                       
+   not_block                     
+  not_script                    
+  try_comment                    ># [ debug | info | notice | wa...<
+  got_comment                   
+ got_lines                     
+ try_lines                      >error_log  /var/log/nginx.erro...<
+  try_assignment                 >error_log  /var/log/nginx.erro...<
+   try_key                        >error_log  /var/log/nginx.erro...<
+   got_key                       
+   try__                          >  /var/log/nginx.error_log  in...<
+   got__                         
+   try_value                      >/var/log/nginx.error_log  info...<
+   got_value                     
+   try__                          >;\n \nevents {\n  worker_connecti...<
+   got__                         
+   try_terminator                 >;\n \nevents {\n  worker_connecti...<
+   got_terminator                
+  got_assignment                
+ got_lines                     
+ try_lines                      >events {\n  worker_connections ...<
+  try_assignment                 >events {\n  worker_connections ...<
+   try_key                        >events {\n  worker_connections ...<
+   got_key                       
+   try__                          > {\n  worker_connections   2000...<
+   got__                         
+   try_value                      >{\n  worker_connections   2000;...<
+   not_value                     
+  not_assignment                
+  try_block                      >events {\n  worker_connections ...<
+   try_key                        >events {\n  worker_connections ...<
+   got_key                       
+   try__                          > {\n  worker_connections   2000...<
+   got__                         
+   try_modifier                   >{\n  worker_connections   2000;...<
+   got_modifier                  
+   try_modifier                   > ^.+\.(jpg|jpeg|gif)$ {\n      ...<
+   not_modifier                  
+   try__                          > ^.+\.(jpg|jpeg|gif)$ {\n      ...<
+   got__                         
+   try_value                      >^.+\.(jpg|jpeg|gif)$ {\n      r...<
+   got_value                     
+   try_value                      >{\n      root         /spool/ww...<
+   not_value                     
+   try_assignment                 >\n      root         /spool/www...<
+    try_key                        >\n      root         /spool/www...<
+    not_key                       
+   not_assignment                
+   try_block                      >\n      root         /spool/www...<
+    try_key                        >\n      root         /spool/www...<
+    not_key                       
+   not_block                     
+   try_comment                    >\n      root         /spool/www...<
+   not_comment                   
+  not_block                     
+  try_script                     >events {\n  worker_connections ...<
+   try_assignment                 >events {\n  worker_connections ...<
+    try_key                        >events {\n  worker_connections ...<
+    got_key                       
+    try__                          > {\n  worker_connections   2000...<
+    got__                         
+    try_value                      >{\n  worker_connections   2000;...<
+    not_value                     
+   not_assignment                
+   try_block                      >events {\n  worker_connections ...<
+    try_key                        >events {\n  worker_connections ...<
+    got_key                       
+    try__                          > {\n  worker_connections   2000...<
+    got__                         
+    try_modifier                   >{\n  worker_connections   2000;...<
+    got_modifier                  
+    try_modifier                   > ^.+\.(jpg|jpeg|gif)$ {\n      ...<
+    not_modifier                  
+    try__                          > ^.+\.(jpg|jpeg|gif)$ {\n      ...<
+    got__                         
+    try_value                      >^.+\.(jpg|jpeg|gif)$ {\n      r...<
+    got_value                     
+    try_value                      >{\n      root         /spool/ww...<
+    not_value                     
+    try_assignment                 >\n      root         /spool/www...<
+     try_key                        >\n      root         /spool/www...<
+     not_key                       
+    not_assignment                
+    try_block                      >\n      root         /spool/www...<
+     try_key                        >\n      root         /spool/www...<
+     not_key                       
+    not_block                     
+    try_comment                    >\n      root         /spool/www...<
+    not_comment                   
+   not_block                     
+  not_script                    
+  try_comment                    >events {\n  worker_connections ...<
+  not_comment                   
+  try_blanks                     >events {\n  worker_connections ...<
+  not_blanks                    
+ not_lines                     
+got_alllines                  
+Error parsing Pegex document:
+  msg:      Parse document failed for some reason
+  line:     120
+  column:   0
+  context:      location ~* ^.+\.(jpg|jpeg|gif)$ {\n      root         /spool/www;\n      access_log  
+                                                  ^
+  position: 3010 (158 pre-lookahead)
+ at ./test_hosts.pl line 31.

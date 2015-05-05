@@ -1,0 +1,21 @@
+%grammar opsboy
+%version 0.0.1
+
+alllines: lines*
+
+lines: assignment | block | script | comment | blanks
+
+assignment: (key) - (value) - terminator
+script: ( assignment | block )
+block: 
+  ( key - modifier* - value* ) 
+  /- LCURLY /
+    ( assignment | block | comment )
+  /- RCURLY /
+
+key: / ( [ WORD SLASH ]+ ) /
+modifier: / EQUAL | TILDE STAR | TILDE | CARET TILDE /
+value: / ( [^\{\}\;\,]+ ) /
+terminator: / ';' -/
+comment: / '#' ANY* EOL/
+blanks: /- EOL/
