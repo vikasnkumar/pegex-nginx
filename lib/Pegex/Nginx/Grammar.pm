@@ -6,96 +6,27 @@ use constant file => 'pgx/nginx.pgx';
 
 sub make_tree {   # Generated/Inlined by Pegex::Grammar (0.60)
   {
-    '+grammar' => 'opsboy',
+    '+grammar' => 'nginx',
     '+toprule' => 'alllines',
     '+version' => '0.0.1',
-    '_' => {
-      '.rgx' => qr/\G\s*/
-    },
     'alllines' => {
       '+min' => 0,
       '.ref' => 'lines'
     },
     'assignment' => {
-      '.all' => [
-        {
-          '.ref' => 'key'
-        },
-        {
-          '.ref' => '_'
-        },
-        {
-          '.ref' => 'value'
-        },
-        {
-          '.ref' => '_'
-        },
-        {
-          '.ref' => 'terminator'
-        }
-      ]
+      '.rgx' => qr/\G[\w\/]+(\s*[^\{\}\;\,]+)*;.*\r?\n?/
     },
     'blanks' => {
       '.rgx' => qr/\G\s*\r?\n/
     },
     'block' => {
-      '.all' => [
-        {
-          '.all' => [
-            {
-              '.ref' => 'key'
-            },
-            {
-              '.ref' => '_'
-            },
-            {
-              '+min' => 0,
-              '.ref' => 'modifier'
-            },
-            {
-              '.ref' => '_'
-            },
-            {
-              '+min' => 0,
-              '.ref' => 'value'
-            }
-          ]
-        },
-        {
-          '.rgx' => qr/\G\s*\{/
-        },
-        {
-          '.any' => [
-            {
-              '.ref' => 'assignment'
-            },
-            {
-              '.ref' => 'block'
-            },
-            {
-              '.ref' => 'comment'
-            }
-          ]
-        },
-        {
-          '.rgx' => qr/\G\s*\}/
-        }
-      ]
+      '.rgx' => qr/\G\s*(([\w\/]+(\s*=|\~\*|\~|\^\~\s*[^\{\}\;\,]+)*)\s*\{\s*(([\w\/]+(\s*[^\{\}\;\,]+)*;.*\r?\n?))*\s*\}\s*)\s*/
     },
     'comment' => {
-      '.rgx' => qr/\G\#.*\r?\n/
-    },
-    'key' => {
-      '.rgx' => qr/\G([\w\/]+)/
+      '.rgx' => qr/\G\#.*\r?\n?/
     },
     'lines' => {
       '.any' => [
-        {
-          '.ref' => 'assignment'
-        },
-        {
-          '.ref' => 'block'
-        },
         {
           '.ref' => 'script'
         },
@@ -107,10 +38,8 @@ sub make_tree {   # Generated/Inlined by Pegex::Grammar (0.60)
         }
       ]
     },
-    'modifier' => {
-      '.rgx' => qr/\G=|\~\*|\~|\^\~/
-    },
     'script' => {
+      '+min' => 1,
       '.any' => [
         {
           '.ref' => 'assignment'
@@ -119,12 +48,6 @@ sub make_tree {   # Generated/Inlined by Pegex::Grammar (0.60)
           '.ref' => 'block'
         }
       ]
-    },
-    'terminator' => {
-      '.rgx' => qr/\G;\s*/
-    },
-    'value' => {
-      '.rgx' => qr/\G([^\{\}\;\,]+)/
     }
   }
 }

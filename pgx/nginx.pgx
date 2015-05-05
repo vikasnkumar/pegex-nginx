@@ -1,21 +1,23 @@
-%grammar opsboy
+%grammar nginx
 %version 0.0.1
 
 alllines: lines*
 
-lines: assignment | block | script | comment | blanks
+lines: script | comment | blanks
 
-assignment: (key) - (value) - terminator
-script: ( assignment | block )
-block: 
-  ( key - modifier* - value* ) 
-  /- LCURLY /
-    ( assignment | block | comment )
-  /- RCURLY /
+block: /- (
+  ( key ( - modifier - value )* )
+  - LCURLY -
+    ( ( assignment ) | block )*
+  - RCURLY -
+) -/
+assignment: / key ( - value )* terminator /
+script: ( assignment | block )+
 
-key: / ( [ WORD SLASH ]+ ) /
+key: / [ WORD SLASH ]+ /
 modifier: / EQUAL | TILDE STAR | TILDE | CARET TILDE /
-value: / ( [^\{\}\;\,]+ ) /
-terminator: / ';' -/
-comment: / '#' ANY* EOL/
+value: / [^\{\}\;\,]+ /
+line: / ANY* EOL? /
+terminator: / ';' line /
+comment: / '#' line /
 blanks: /- EOL/

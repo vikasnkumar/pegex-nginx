@@ -32,7 +32,7 @@ my $ast =
   Pegex::Parser->new(
     grammar  => Pegex::Nginx::Grammar->new,
     receiver => Pegex::Nginx::AST->new,
-    debug => 1,
+    #debug => 2,
   )->parse($src);
 
-print Dumper $ass;
+#print Dumper $ass;
