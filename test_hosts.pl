@@ -14,8 +14,19 @@ my $ass;
     
     state $directive;
     
-    sub got_block {
+    sub got_assignment {
       my ($self,$list) = @_;
+      print "ASSIGN\n";
+      print Dumper $list;
+    }
+    sub got_named_block {
+      my ($self,$list) = @_;
+      print "NAMED\n";
+      print Dumper $list;
+    }
+    sub got_unnamed_block {
+      my ($self,$list) = @_;
+      print "UNNAMED\n";
       print Dumper $list;
     }
 }
@@ -28,11 +39,10 @@ open my $in, $infile or
 
 my $src = do { local $/; <$in> };
 
-my $ast =
-  Pegex::Parser->new(
-    grammar  => Pegex::Nginx::Grammar->new,
-    receiver => Pegex::Nginx::AST->new,
-    #debug => 2,
-  )->parse($src);
+my $ast = Pegex::Parser->new(
+  grammar  => Pegex::Nginx::Grammar->new,
+  receiver => Pegex::Nginx::AST->new,
+  debug => 1,
+)->parse($src);
 
 #print Dumper $ass;

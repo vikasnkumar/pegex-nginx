@@ -1,23 +1,26 @@
 %grammar nginx
 %version 0.0.1
 
-alllines: lines*
+allconf: conf*
 
-lines: script | comment | blanks
+conf: script* comment* EOS
 
-block: /- (
-  ( key ( - modifier - value )* )
-  - LCURLY -
-    ( ( assignment ) | block )*
-  - RCURLY -
-) -/
-assignment: / key ( - value )* terminator /
-script: ( assignment | block )+
+comment: /- HASH ANY* EOL/ | blank-line
+blank-line: /- EOL/
+#_: / BLANK* EOL?/
+#__: / BLANK+ EOL?/
+line-ending: /- SEMI - EOL?/
+
+block: ( named-block | unnamed-block )
+named-block: key modifier value anonymous-block
+unnamed-block: key anonymous-block
+anonymous-block: start-block ( assignment | block )* end-block
+start-block: /- LCURLY - EOL?/
+end-block: /- RCURLY - EOL?/
+
+assignment: / - ( key ) ( value )* line-ending /
+script: - ( assignment | block )+ -
 
 key: / [ WORD SLASH ]+ /
 modifier: / EQUAL | TILDE STAR | TILDE | CARET TILDE /
 value: / [^\{\}\;\,]+ /
-line: / ANY* EOL? /
-terminator: / ';' line /
-comment: / '#' line /
-blanks: /- EOL/
