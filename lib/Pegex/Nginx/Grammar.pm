@@ -29,6 +29,9 @@ sub make_tree {   # Generated/Inlined by Pegex::Grammar (0.60)
             },
             {
               '.ref' => 'block'
+            },
+            {
+              '.ref' => 'comment'
             }
           ]
         },
@@ -88,6 +91,7 @@ sub make_tree {   # Generated/Inlined by Pegex::Grammar (0.60)
           '.ref' => 'key'
         },
         {
+          '+min' => 0,
           '.ref' => 'modifier'
         },
         {

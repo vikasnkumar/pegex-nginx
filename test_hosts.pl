@@ -19,14 +19,9 @@ my $ass;
       print "ASSIGN\n";
       print Dumper $list;
     }
-    sub got_named_block {
+    sub got_block {
       my ($self,$list) = @_;
-      print "NAMED\n";
-      print Dumper $list;
-    }
-    sub got_unnamed_block {
-      my ($self,$list) = @_;
-      print "UNNAMED\n";
+      print "BLOCK\n";
       print Dumper $list;
     }
 }
@@ -42,7 +37,7 @@ my $src = do { local $/; <$in> };
 my $ast = Pegex::Parser->new(
   grammar  => Pegex::Nginx::Grammar->new,
   receiver => Pegex::Nginx::AST->new,
-  debug => 1,
+  #debug => 1,
 )->parse($src);
 
 #print Dumper $ass;

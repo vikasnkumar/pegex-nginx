@@ -3,7 +3,7 @@
 
 allconf: conf*
 
-conf: script* comment* EOS
+conf: script | comment
 
 comment: /- HASH ANY* EOL/ | blank-line
 blank-line: /- EOL/
@@ -12,9 +12,9 @@ blank-line: /- EOL/
 line-ending: /- SEMI - EOL?/
 
 block: ( named-block | unnamed-block )
-named-block: key modifier value anonymous-block
+named-block: key modifier* value anonymous-block
 unnamed-block: key anonymous-block
-anonymous-block: start-block ( assignment | block )* end-block
+anonymous-block: start-block ( assignment | block | comment )* end-block
 start-block: /- LCURLY - EOL?/
 end-block: /- RCURLY - EOL?/
 
