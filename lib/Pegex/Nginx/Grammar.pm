@@ -9,36 +9,9 @@ sub make_tree {   # Generated/Inlined by Pegex::Grammar (0.60)
     '+grammar' => 'nginx',
     '+toprule' => 'allconf',
     '+version' => '0.0.1',
-    '_' => {
-      '.rgx' => qr/\G\s*/
-    },
     'allconf' => {
       '+min' => 0,
       '.ref' => 'conf'
-    },
-    'anonymous_block' => {
-      '.all' => [
-        {
-          '.ref' => 'start_block'
-        },
-        {
-          '+min' => 0,
-          '.any' => [
-            {
-              '.ref' => 'assignment'
-            },
-            {
-              '.ref' => 'block'
-            },
-            {
-              '.ref' => 'comment'
-            }
-          ]
-        },
-        {
-          '.ref' => 'end_block'
-        }
-      ]
     },
     'assignment' => {
       '.rgx' => qr/\G\s*([\w\/]+)([^\{\}\;\,]+)*\s*;\s*\r?\n?/
@@ -47,14 +20,7 @@ sub make_tree {   # Generated/Inlined by Pegex::Grammar (0.60)
       '.rgx' => qr/\G\s*\r?\n/
     },
     'block' => {
-      '.any' => [
-        {
-          '.ref' => 'named_block'
-        },
-        {
-          '.ref' => 'unnamed_block'
-        }
-      ]
+      '.rgx' => qr/\G\s*([\w\/]+)(=|\~\*|\~|\^\~)*([^\{\}\;\,]+)*\s*\{\s*\r?\n?/
     },
     'comment' => {
       '.any' => [
@@ -79,65 +45,24 @@ sub make_tree {   # Generated/Inlined by Pegex::Grammar (0.60)
     'end_block' => {
       '.rgx' => qr/\G\s*\}\s*\r?\n?/
     },
-    'key' => {
-      '.rgx' => qr/\G[\w\/]+/
-    },
-    'modifier' => {
-      '.rgx' => qr/\G=|\~\*|\~|\^\~/
-    },
-    'named_block' => {
-      '.all' => [
-        {
-          '.ref' => 'key'
-        },
-        {
-          '+min' => 0,
-          '.ref' => 'modifier'
-        },
-        {
-          '.ref' => 'value'
-        },
-        {
-          '.ref' => 'anonymous_block'
-        }
-      ]
+    'lua' => {
+      '.rgx' => qr/\G(\s*\w+?lua[\s\S]+?)\s*;\s*\r?\n?\s*/
     },
     'script' => {
-      '.all' => [
+      '.any' => [
         {
-          '.ref' => '_'
+          '.ref' => 'assignment'
         },
         {
-          '+min' => 1,
-          '.any' => [
-            {
-              '.ref' => 'assignment'
-            },
-            {
-              '.ref' => 'block'
-            }
-          ]
+          '.ref' => 'block'
         },
         {
-          '.ref' => '_'
+          '.ref' => 'end_block'
+        },
+        {
+          '.ref' => 'lua'
         }
       ]
-    },
-    'start_block' => {
-      '.rgx' => qr/\G\s*\{\s*\r?\n?/
-    },
-    'unnamed_block' => {
-      '.all' => [
-        {
-          '.ref' => 'key'
-        },
-        {
-          '.ref' => 'anonymous_block'
-        }
-      ]
-    },
-    'value' => {
-      '.rgx' => qr/\G[^\{\}\;\,]+/
     }
   }
 }

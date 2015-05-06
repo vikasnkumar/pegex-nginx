@@ -1,89 +1,92 @@
-Compiled 'pgx/nginx.pgx' into 'lib/Pegex/Nginx/Grammar.pm'.
-ASSIGN
-[
-  'user',
-  '  www www'
-]
-ASSIGN
-[
-  'worker_processes',
-  '  2'
-]
-ASSIGN
-[
-  'pid',
-  ' /var/run/nginx.pid'
-]
-ASSIGN
-[
-  'error_log',
-  '  /var/log/nginx.error_log  info'
-]
-ASSIGN
-[
-  'worker_connections',
-  '   2000'
-]
-ASSIGN
-[
-  'use',
-  ' kqueue'
-]
-ASSIGN
-[
-  'proxy_pass',
-  '         http://127.0.0.1/'
-]
-ASSIGN
-[
-  'proxy_redirect',
-  '     off'
-]
-BLOCK
-[
-  [],
-  [
-    [
-      1,
-      1
-    ]
-  ]
-]
-ASSIGN
-[
-  'root',
-  '  /spool/www'
-]
-ASSIGN
-[
-  'charset',
-  '         on'
-]
-ASSIGN
-[
-  'source_charset',
-  '  koi8-r'
-]
-BLOCK
-[
-  [],
-  [
-    [
-      1,
-      1,
-      1
-    ]
-  ]
-]
-BLOCK
-[
-  [],
-  [
-    [
-      1,
-      1,
-      1,
-      1
-    ]
-  ]
-]
+$VAR1 = {
+          'http' => {
+                      'assignments' => {
+                                         'client_header_timeout' => '  3m',
+                                         'output_buffers' => '   1 32k',
+                                         'log_format' => ' download  \'$remote_addr - $remote_user [$time_local]  \'
+    \'"$request" $status $bytes_sent \'
+    \'"$http_referer" "$http_user_agent" \'
+    \'"$http_range" "$sent_http_content_range"\'',
+                                         'client_body_timeout' => '    3m',
+                                         'gzip_buffers' => '     4 8k',
+                                         'client_header_buffer_size' => '    1k',
+                                         'send_timeout' => '           3m',
+                                         'gzip_min_length' => '  1100',
+                                         'include' => '       conf/mime.types',
+                                         'sendfile' => '         on',
+                                         'gzip_types' => '       text/plain',
+                                         'tcp_nodelay' => '      on',
+                                         'keepalive_timeout' => '  75 20',
+                                         'gzip' => ' on',
+                                         'send_lowat' => '       12000',
+                                         'default_type' => '  application/octet-stream',
+                                         'large_client_header_buffers' => '  4 4k',
+                                         'postpone_output' => '  1460',
+                                         'tcp_nopush' => '       on'
+                                       },
+                      'modifier' => undef,
+                      'value' => ' '
+                    },
+          'if' => {
+                    'value' => ' ($invalid_referer) ',
+                    'modifier' => undef,
+                    'assignments' => {
+                                       'rewrite' => ' ^/(download/.*)/mp3/(.*)\\..*$ /$1/mp3/$2.mp3 break',
+                                       'return' => '   403',
+                                       'access_log' => '   /var/log/nginx-download.access_log  download',
+                                       'root' => '         /spool/www'
+                                     }
+                  },
+          'top_level' => {
+                           'pid' => ' /var/run/nginx.pid',
+                           'user' => '  www www',
+                           'worker_processes' => '  2',
+                           'error_log' => '  /var/log/nginx.error_log  info'
+                         },
+          'location' => {
+                          'assignments' => {
+                                             'valid_referers' => '  none  blocked  server_names  *.example.com',
+                                             'client_body_buffer_size' => '    128k',
+                                             'proxy_buffer_size' => '          4k',
+                                             'charset' => '         on',
+                                             'root' => '         /spool/www',
+                                             'proxy_set_header' => '   X-Real-IP        $remote_addr',
+                                             'expires' => '      30d',
+                                             'error_page' => '  404  /404.html',
+                                             'proxy_send_timeout' => '         90',
+                                             'proxy_temp_file_write_size' => ' 64k',
+                                             'client_max_body_size' => '       10m',
+                                             'rewrite' => '   ^/old_stuff/(.*)$  /new_stuff/$1  permanent',
+                                             'proxy_temp_path' => '            /var/nginx/proxy_temp',
+                                             'access_log' => '   off',
+                                             'proxy_busy_buffers_size' => '    64k',
+                                             'client_body_temp_path' => '      /var/nginx/client_body_temp',
+                                             'proxy_send_lowat' => '           12000',
+                                             'source_charset' => '  koi8-r',
+                                             'proxy_buffers' => '              4 32k',
+                                             'proxy_pass' => '         http://127.0.0.1/',
+                                             'proxy_connect_timeout' => '      90',
+                                             'proxy_read_timeout' => '         90',
+                                             'proxy_redirect' => '     off'
+                                           },
+                          'value' => ' ~* ^.+\\.(jpg|jpeg|gif)$ ',
+                          'modifier' => undef
+                        },
+          'server' => {
+                        'value' => ' ',
+                        'modifier' => undef,
+                        'assignments' => {
+                                           'access_log' => '   /var/log/nginx.access_log  main',
+                                           'server_name' => '   one.example.com  www.one.example.com',
+                                           'listen' => '        one.example.com'
+                                         }
+                      },
+          'events' => {
+                        'assignments' => {
+                                           'worker_connections' => '   2000',
+                                           'use' => ' kqueue'
+                                         },
+                        'value' => ' ',
+                        'modifier' => undef
+                      }
+        };

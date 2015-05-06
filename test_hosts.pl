@@ -16,14 +16,24 @@ my $ass;
     
     sub got_assignment {
       my ($self,$list) = @_;
-      print "ASSIGN\n";
+      if ( $directive ne '' ) {
+        $ass->{$directive}->{assignments}->{$list->[0]} = $list->[1];
+      }
+      else {
+        $ass->{top_level}->{$list->[0]} = $list->[1];
+      }
+    }
+    sub got_lua {
+      my ($self,$list) = @_;
       print Dumper $list;
     }
     sub got_block {
       my ($self,$list) = @_;
-      print "BLOCK\n";
-      print Dumper $list;
+      $directive = $list->[0];
+      $ass->{$directive}->{modifier} = $list->[1];
+      $ass->{$directive}->{value} = $list->[2];
     }
+
 }
 
 my $infile = shift or
@@ -37,7 +47,7 @@ my $src = do { local $/; <$in> };
 my $ast = Pegex::Parser->new(
   grammar  => Pegex::Nginx::Grammar->new,
   receiver => Pegex::Nginx::AST->new,
-  #debug => 1,
+#  debug => 1,
 )->parse($src);
 
 #print Dumper $ass;

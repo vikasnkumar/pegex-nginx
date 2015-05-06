@@ -11,15 +11,16 @@ blank-line: /- EOL/
 #__: / BLANK+ EOL?/
 line-ending: /- SEMI - EOL?/
 
-block: ( named-block | unnamed-block )
-named-block: key modifier* value anonymous-block
-unnamed-block: key anonymous-block
-anonymous-block: start-block ( assignment | block | comment )* end-block
+block: 
+  /- ( key ) ( modifier )* ( value )* start-block /
+#    ( block-content )*
+#  end-block
+block-content: assignment | block | comment
 start-block: /- LCURLY - EOL?/
 end-block: /- RCURLY - EOL?/
-
-assignment: / - ( key ) ( value )* line-ending /
-script: - ( assignment | block )+ -
+lua: / ( - <WORD>+?lua ALL+? ) line-ending -/
+assignment: /- ( key ) ( value )* line-ending /
+script: assignment | block | end-block | lua
 
 key: / [ WORD SLASH ]+ /
 modifier: / EQUAL | TILDE STAR | TILDE | CARET TILDE /
