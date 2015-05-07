@@ -34,7 +34,7 @@ sub make_tree {   # Generated/Inlined by Pegex::Grammar (0.60)
       '.ref' => 'value'
     },
     'lua' => {
-      '.rgx' => qr/\G\s*(\w+?lua[\s\S]+?)\s*;\s*\r?\n?/
+      '.rgx' => qr/\G\s*(\w+?lua)([\s\S]+?)\s*;\s*\r?\n?/
     },
     'value' => {
       '.any' => [

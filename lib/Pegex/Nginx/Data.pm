@@ -6,6 +6,6 @@ use Data::Dumper;
 use feature 'say';
 
 sub got_block { 
-  +{map $_, @_}
+  +{ map ref $_ eq 'Pegex::Nginx::Data' ? 'block' : $_, @_ }
 }
 1;

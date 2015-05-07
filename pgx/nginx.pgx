@@ -10,7 +10,7 @@ block:
     ( value* ) 
   /- block-end /
 block-head: / key modifier* param* /
-lua: /- ( <WORD>+?lua ALL+? ) line-ending /
+lua: /- ( <WORD>+?lua ) ( ALL+? ) line-ending /
 assignment: /- key param* line-ending /
 
 # CONSTANTS
