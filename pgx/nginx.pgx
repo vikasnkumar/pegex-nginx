@@ -3,20 +3,29 @@
 
 conf: value*
 
-value: block | lua | assignment | comment
+value: block | assignment | comment | lua
 
-block: 
-  /- block-head block-start / 
-    ( value* ) 
-  /- block-end /
-block-head: / key modifier* param* /
-lua: /- ( <WORD>+?lua ) ( ALL+? ) line-ending /
-assignment: /- key param* line-ending /
+block: - block-head - block-start - value* - block-end -
+block-head: - key - modifier* - param* -
+### this is for storing content within Single Quotes
+### You may need something similar for double quotes if necessary
+lua-string:
+    /(:
+        SINGLE
+        ((: [^ BACK SINGLE] |
+            BACK SINGLE |
+            BACK BACK
+        )*?)
+        SINGLE
+    )/
+lua-word: / ( <WORD>*lua ) /
+lua: - lua-word - lua-string - line-ending -
+assignment: - key - param+ - line-ending
 
 # CONSTANTS
 block-start: /- LCURLY - EOL?/
 block-end: /- RCURLY - EOL?/
-comment: /- HASH ANY* EOL /
+comment: /- HASH ANY* EOL / | blank-line
 blank-line: /- EOL/
 line-ending: /- SEMI - EOL?/
 key: / ( [ WORD SLASH ]+ ) /

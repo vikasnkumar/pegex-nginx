@@ -9,32 +9,156 @@ sub make_tree {   # Generated/Inlined by Pegex::Grammar (0.60)
     '+grammar' => 'nginx',
     '+toprule' => 'conf',
     '+version' => '0.0.1',
+    '_' => {
+      '.rgx' => qr/\G\s*/
+    },
     'assignment' => {
-      '.rgx' => qr/\G\s*([\w\/]+)([^\}\{;,]+)*\s*;\s*\r?\n?/
+      '.all' => [
+        {
+          '.ref' => '_'
+        },
+        {
+          '.ref' => 'key'
+        },
+        {
+          '.ref' => '_'
+        },
+        {
+          '+min' => 1,
+          '.ref' => 'param'
+        },
+        {
+          '.ref' => '_'
+        },
+        {
+          '.ref' => 'line_ending'
+        }
+      ]
+    },
+    'blank_line' => {
+      '.rgx' => qr/\G\s*\r?\n/
     },
     'block' => {
       '.all' => [
         {
-          '.rgx' => qr/\G\s*([\w\/]+)(=|\~\*|\~|\^\~)*([^\}\{;,]+)*\s*\{\s*\r?\n?/
+          '.ref' => '_'
+        },
+        {
+          '.ref' => 'block_head'
+        },
+        {
+          '.ref' => '_'
+        },
+        {
+          '.ref' => 'block_start'
+        },
+        {
+          '.ref' => '_'
         },
         {
           '+min' => 0,
           '.ref' => 'value'
         },
         {
-          '.rgx' => qr/\G\s*\s*\}\s*\r?\n?/
+          '.ref' => '_'
+        },
+        {
+          '.ref' => 'block_end'
+        },
+        {
+          '.ref' => '_'
         }
       ]
     },
+    'block_end' => {
+      '.rgx' => qr/\G\s*\}\s*\r?\n?/
+    },
+    'block_head' => {
+      '.all' => [
+        {
+          '.ref' => '_'
+        },
+        {
+          '.ref' => 'key'
+        },
+        {
+          '.ref' => '_'
+        },
+        {
+          '+min' => 0,
+          '.ref' => 'modifier'
+        },
+        {
+          '.ref' => '_'
+        },
+        {
+          '+min' => 0,
+          '.ref' => 'param'
+        },
+        {
+          '.ref' => '_'
+        }
+      ]
+    },
+    'block_start' => {
+      '.rgx' => qr/\G\s*\{\s*\r?\n?/
+    },
     'comment' => {
-      '.rgx' => qr/\G\s*\#.*\r?\n/
+      '.any' => [
+        {
+          '.rgx' => qr/\G\s*\#.*\r?\n/
+        },
+        {
+          '.ref' => 'blank_line'
+        }
+      ]
     },
     'conf' => {
       '+min' => 0,
       '.ref' => 'value'
     },
+    'key' => {
+      '.rgx' => qr/\G([\w\/]+)/
+    },
+    'line_ending' => {
+      '.rgx' => qr/\G\s*;\s*\r?\n?/
+    },
     'lua' => {
-      '.rgx' => qr/\G\s*(\w+?lua)([\s\S]+?)\s*;\s*\r?\n?/
+      '.all' => [
+        {
+          '.ref' => '_'
+        },
+        {
+          '.ref' => 'lua_word'
+        },
+        {
+          '.ref' => '_'
+        },
+        {
+          '.ref' => 'lua_string'
+        },
+        {
+          '.ref' => '_'
+        },
+        {
+          '.ref' => 'line_ending'
+        },
+        {
+          '.ref' => '_'
+        }
+      ]
+    },
+    'lua_string' => {
+      '.rgx' => qr/\G(?:'((?:[^\\']|\\'|\\\\)*?)')/
+    },
+    'lua_word' => {
+      '.rgx' => qr/\G(\w*lua)/
+    },
+    'modifier' => {
+      '.rgx' => qr/\G(=|\~\*|\~|\^\~)/
+    },
+    'param' => {
+      '.rgx' => qr/\G([^\}\{;,]+)/
     },
     'value' => {
       '.any' => [
@@ -42,13 +166,13 @@ sub make_tree {   # Generated/Inlined by Pegex::Grammar (0.60)
           '.ref' => 'block'
         },
         {
-          '.ref' => 'lua'
-        },
-        {
           '.ref' => 'assignment'
         },
         {
           '.ref' => 'comment'
+        },
+        {
+          '.ref' => 'lua'
         }
       ]
     }

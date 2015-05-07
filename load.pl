@@ -11,5 +11,5 @@ open my $in, $infile or
     die "Cannot open $infile for reading: $!\n";
 
 my $src = do { local $/; <$in> };
-my $ast = Pegex::Nginx->new->load($src);
-print Dumper $ast;
+my $ast = Pegex::Nginx->new->load($src, debug => 0);
+#print Dumper $ast;
