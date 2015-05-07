@@ -1,27 +1,23 @@
 %grammar nginx
 %version 0.0.1
 
-allconf: conf*
+conf: value*
 
-conf: script | comment
-
-comment: /- HASH ANY* EOL/ | blank-line
-blank-line: /- EOL/
-#_: / BLANK* EOL?/
-#__: / BLANK+ EOL?/
-line-ending: /- SEMI - EOL?/
+value: block | lua | assignment | comment
 
 block: 
-  /- ( key ) ( modifier )* ( value )* start-block /
-#    ( block-content )*
-#  end-block
-block-content: assignment | block | comment
+    /- key modifier* param* start-block /
+      ( value )*
+    /- end-block /
+lua: /- ( <WORD>+?lua ALL+? ) line-ending /
+assignment: /- key param* line-ending /
+
+# CONSTANTS
 start-block: /- LCURLY - EOL?/
 end-block: /- RCURLY - EOL?/
-lua: / ( - <WORD>+?lua ALL+? ) line-ending -/
-assignment: /- ( key ) ( value )* line-ending /
-script: assignment | block | end-block | lua
-
-key: / [ WORD SLASH ]+ /
-modifier: / EQUAL | TILDE STAR | TILDE | CARET TILDE /
-value: / [^\{\}\;\,]+ /
+comment: /- HASH ANY* EOL /
+blank-line: /- EOL/
+line-ending: /- SEMI - EOL?/
+key: / ( [ WORD SLASH ]+ ) /
+modifier: / ( EQUAL | TILDE STAR | TILDE | CARET TILDE ) /
+param: / ( [^ RCURLY LCURLY SEMI COMMA ]+ ) /
