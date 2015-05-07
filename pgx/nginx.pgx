@@ -6,15 +6,16 @@ conf: value*
 value: block | lua | assignment | comment
 
 block: 
-    /- key modifier* param* start-block /
-      ( value )*
-    /- end-block /
+  /- block-head block-start / 
+    ( value* ) 
+  /- block-end /
+block-head: / key modifier* param* /
 lua: /- ( <WORD>+?lua ALL+? ) line-ending /
 assignment: /- key param* line-ending /
 
 # CONSTANTS
-start-block: /- LCURLY - EOL?/
-end-block: /- RCURLY - EOL?/
+block-start: /- LCURLY - EOL?/
+block-end: /- RCURLY - EOL?/
 comment: /- HASH ANY* EOL /
 blank-line: /- EOL/
 line-ending: /- SEMI - EOL?/
