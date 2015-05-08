@@ -1,0 +1,8 @@
+$VAR1 = {
+          user => [ 'www www', 'www', 'www],
+          events => {
+            worker_connections => 2000,
+            use => 'kqueue',
+          }
+          user
+

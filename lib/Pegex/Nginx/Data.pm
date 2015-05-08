@@ -4,27 +4,22 @@ extends 'Pegex::Tree';
 
 use Data::Dumper;
 use XXX;
-use feature 'say';
+use feature qw/state say/;
 
 sub got_comment { return; }
 sub got_blank_line { return; }
 
 sub got_block {
     my $block = pop;
-    #print Dumper $block;
-    #return { $block->[0]->[0] => $block->[1] };
-    #print Dumper $block;
-    #my $return->{$block->[0]->[0]} = {
-    #  directive => $block->[0]->[0],
-    #  modifier  => $block->[0]->[1],
-    #  value     => $block->[0]->[2]
-    #};
-    #$return->{$block->[0]->[0]}->{options} = $block->[1]->[0];
+    push @{$block->[1]}, {
+      directive_modifier => $block->[0]->[1]->[0],
+      directive_value    => $block->[0]->[2]->[0],
+    };
+    return { $block->[0]->[0] => $block->[1] };
 }
 sub got_assignment {
     my $assignment = pop;
-    my %return;
-    return $return{$assignment->[0]} = $assignment->[1]->[0];
+    return { $assignment->[0] => $assignment->[1]->[0] };
 }
 
 sub got_lua_word {
@@ -50,7 +45,37 @@ sub got_value {
     return @_;
 }
 
-#sub got_block { 
-#  +{ map ref $_ eq 'Pegex::Nginx::Data' ? $_[1]->[0]->[0] : $_, @_ }
-#}
+sub final {
+  my $result = pop;
+  my $out = _create_structure($result);
+  return $out;
+}
+
+sub _create_structure {
+  my ($data, $out) = @_;
+
+  for my $hash ( @$data ) {
+    for my $key ( keys %$hash ) {
+      my $val = $hash->{$key};
+      if ( ! ref $val ) {
+        $out->{$key} = $val;
+      }
+      else {
+        if ( exists $out->{$key} ) {
+          if ( ref $out->{$key} ne 'ARRAY' ) {
+            my $temp = $out->{$key};
+            undef $out->{$key};
+            $out->{$key}->[0] = $temp;
+          }
+          push @{ $out->{$key} }, _create_structure($val);
+        }
+        else {
+          $out->{$key} = _create_structure($val);
+        }
+      }
+    }
+  }
+  return $out;
+}
+
 1;
