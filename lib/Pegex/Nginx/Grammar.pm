@@ -93,7 +93,7 @@ sub make_tree {   # Generated/Inlined by Pegex::Grammar (0.60)
         },
         {
           '+min' => 0,
-          '.ref' => 'param'
+          '.ref' => 'directive'
         },
         {
           '.ref' => '_'
@@ -116,6 +116,9 @@ sub make_tree {   # Generated/Inlined by Pegex::Grammar (0.60)
     'conf' => {
       '+min' => 0,
       '.ref' => 'value'
+    },
+    'directive' => {
+      '.rgx' => qr/\G([^\}\{;,\s]+)/
     },
     'key' => {
       '.rgx' => qr/\G([\w\/]+)/

@@ -12,3 +12,4 @@ open my $in, $infile or
 
 my $src = do { local $/; <$in> };
 my $ast = Pegex::Nginx->new->load($src, debug => 0);
+print Dumper($ast), "\n";
