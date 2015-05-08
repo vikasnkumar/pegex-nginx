@@ -1,0 +1,19 @@
+---
+events:
+  accept_mutex:
+    type: checkbox
+    default: checked
+    required: true
+  test:
+    type: text
+    default: blub
+    value:
+      - blah
+      - blah2
+server:
+  log:
+    type: checkbox
+    default: checked
+  blarb:
+    type: text
+    default: blarbbbb

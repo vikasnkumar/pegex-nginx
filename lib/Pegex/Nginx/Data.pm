@@ -9,33 +9,47 @@ use feature 'say';
 sub got_comment { return; }
 sub got_blank_line { return; }
 
+sub got_block {
+    my $block = pop;
+    return { $block->[0]->[0] => $block->[1] };
+    #print Dumper $block;
+    #my $return->{$block->[0]->[0]} = {
+    #  directive => $block->[0]->[0],
+    #  modifier  => $block->[0]->[1],
+    #  value     => $block->[0]->[2]
+    #};
+    #$return->{$block->[0]->[0]}->{options} = $block->[1]->[0];
+}
 sub got_assignment {
-    my $self = shift;
-    YYY { assignment => \@_ };
-    return @_;
+    my $assignment = pop;
+    my %test;
+    $test{$assignment->[0]} = $assignment->[1]->[0];
+    #return { $assignment->[0] => $assignment->[1]->[0] };
+    #YYY { assignment => \@_ };
+    #print Dumper \@_;
+    return %test;
 }
 
 sub got_lua_word {
     my $self = shift;
-    YYY {lua_word => \@_};
-    return;
+    return $_[0];
 }
 
 sub got_lua_string {
     my $self = shift;
-    YYY { lua_string => \@_ };
+    #YYY { lua_string => \@_ };
     return;
 }
 
 sub got_lua {
     my $self = shift;
-    YYY { lua => \@_ };
+    #YYY { lua => \@_ };
     return;
 }
 
 sub got_value {
     my $self = shift;
-    YYY \@_;
+    #YYY \@_;
     return @_;
 }
 

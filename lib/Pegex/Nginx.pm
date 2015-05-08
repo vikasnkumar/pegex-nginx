@@ -13,7 +13,6 @@ sub load {
   Pegex::Parser->new(
     grammar  => Pegex::Nginx::Grammar->new,
     receiver => Pegex::Nginx::Data->new,
-    #debug => 1,
     %args
   )->parse($in);
 }
