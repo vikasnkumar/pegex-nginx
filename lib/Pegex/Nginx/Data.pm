@@ -9,6 +9,18 @@ use feature qw/state say/;
 sub got_comment { return; }
 sub got_blank_line { return; }
 
+sub got_modifier {
+    my $self = shift;
+    #YYY { modifier => \@_ };
+    return @_;
+}
+
+sub got_directive {
+    my $self = shift;
+    #YYY { directive => \@_ };
+    return @_;
+}
+
 sub got_block {
     my $block = pop;
     push @{$block->[1]}, {
@@ -29,14 +41,14 @@ sub got_lua_word {
 
 sub got_lua_string {
     my $self = shift;
-    #YYY { lua_string => \@_ };
-    return;
+    #say $_[0];
+    return $_[0];
 }
 
 sub got_lua {
-    my $self = shift;
-    #YYY { lua => \@_ };
-    return;
+    my ($self, $lua) = @_;
+    $self->flatten($lua) if ref $lua eq 'ARRAY';
+    return { $lua->[0] => $lua->[1] };
 }
 
 sub got_value {

@@ -6,7 +6,7 @@ conf: value*
 value: block | assignment | comment | lua
 
 block: - block-head - block-start - value* - block-end -
-block-head: - key - modifier* - param* -
+block-head: - key - modifier* - directive* -
 ### this is for storing content within Single Quotes
 ### You may need something similar for double quotes if necessary
 lua-string:
@@ -30,4 +30,5 @@ blank-line: /- EOL/
 line-ending: /- SEMI - EOL?/
 key: / ( [ WORD SLASH ]+ ) /
 modifier: / ( EQUAL | TILDE STAR | TILDE | CARET TILDE ) /
+directive: / ( [^ RCURLY LCURLY SEMI COMMA WS ]+ ) /
 param: / ( [^ RCURLY LCURLY SEMI COMMA ]+ ) /
