@@ -11,7 +11,8 @@ sub got_blank_line { return; }
 
 sub got_block {
     my $block = pop;
-    return { $block->[0]->[0] => $block->[1] };
+    #print Dumper $block;
+    #return { $block->[0]->[0] => $block->[1] };
     #print Dumper $block;
     #my $return->{$block->[0]->[0]} = {
     #  directive => $block->[0]->[0],
@@ -22,12 +23,8 @@ sub got_block {
 }
 sub got_assignment {
     my $assignment = pop;
-    my %test;
-    $test{$assignment->[0]} = $assignment->[1]->[0];
-    #return { $assignment->[0] => $assignment->[1]->[0] };
-    #YYY { assignment => \@_ };
-    #print Dumper \@_;
-    return %test;
+    my %return;
+    return $return{$assignment->[0]} = $assignment->[1]->[0];
 }
 
 sub got_lua_word {
